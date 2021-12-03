@@ -1,16 +1,17 @@
-import 'chart.js/auto'
+import { Chart, ArcElement } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2'
-import { useEffect } from 'react'
 import { useStateContext } from '../AppProvider'
 
+Chart.register(ArcElement)
+
 const Canvas = () => {
-  const { chartData, setChartData } = useStateContext()
+  const { chartData } = useStateContext()
 
   return (
     <Doughnut
       data={chartData}
       width={400}
-      height={40}
+      height={400}
       options={{ animation: { duration: 0 } }}
     />
   )

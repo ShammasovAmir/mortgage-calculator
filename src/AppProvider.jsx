@@ -1,4 +1,5 @@
 import { useContext, useState, createContext, useEffect } from 'react'
+import update from 'immutability-helper'
 
 export const StateContext = createContext()
 
@@ -27,33 +28,38 @@ const AppProvider = ({ children }) => {
   /**Chart State*/
   const [chartData, setChartData] = useState({
     labels: ['Principal & Interest', 'Property Tax', 'Home Insurance', 'HOA'],
-    datasets: {
-      label: '# of Votes',
-      data: [
-        monthlyPrincipalInterest,
-        monthlyPropertyTaxes,
-        monthlyHomeInsurance,
-        monthlyHoa,
-      ],
-      backgroundColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderColor: [
-        'rgba(255, 99, 132, 1)',
-        'rgba(54, 162, 235, 1)',
-        'rgba(255, 206, 86, 1)',
-        'rgba(75, 192, 192, 1)',
-        'rgba(153, 102, 255, 1)',
-        'rgba(255, 159, 64, 1)',
-      ],
-      borderWidth: 1,
-    },
+    datasets: [
+      {
+        label: '# of Votes',
+        data: [
+          monthlyPrincipalInterest,
+          monthlyPropertyTaxes,
+          monthlyHomeInsurance,
+          monthlyHoa,
+        ],
+        backgroundColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)',
+        ],
+        borderWidth: 1,
+      },
+    ],
   })
+
+  /**Is Chart Currently Being Displayed */
+  const [chartActive, setChartActive] = useState(false)
 
   useEffect(() => {
     // Calculate data
@@ -66,6 +72,15 @@ const AppProvider = ({ children }) => {
     propertyTax,
     homeInsurance,
     hoa,
+  ])
+
+  useEffect(() => {
+    updateData()
+  }, [
+    monthlyPrincipalInterest,
+    monthlyPropertyTaxes,
+    monthlyHomeInsurance,
+    monthlyHoa,
   ])
 
   const getNumber = (str) => Number(str.replace(/[^0-9\.-]+/g, ''))
@@ -128,6 +143,31 @@ const AppProvider = ({ children }) => {
     )
   }
 
+  // Handle Form Submission
+  const handleFormSubmission = (e) => {
+    e.preventDefault()
+    setChartActive(true)
+    calculateData()
+  }
+
+  // Update chart data
+  const updateData = () => {
+    const newChartData = update(chartData, {
+      datasets: {
+        1: {
+          $set: [
+            monthlyPrincipalInterest,
+            monthlyPropertyTaxes,
+            monthlyHomeInsurance,
+            monthlyHoa,
+          ],
+        },
+      },
+    })
+
+    setChartData(newChartData)
+  }
+
   return (
     <StateContext.Provider
       value={{
@@ -163,6 +203,8 @@ const AppProvider = ({ children }) => {
         setMonthlyTotal,
         chartData,
         setChartData,
+        chartActive,
+        setChartActive,
         handlePriceInput,
         handleLoanYearsInput,
         handleDownPaymentsInput,
@@ -170,6 +212,7 @@ const AppProvider = ({ children }) => {
         handlePropertyTaxInput,
         handleHomeInsuranceInput,
         handleHoaInput,
+        handleFormSubmission,
       }}
     >
       {children}

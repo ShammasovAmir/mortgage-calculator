@@ -23,11 +23,12 @@ const Form = () => {
     handlePropertyTaxInput,
     handleHomeInsuranceInput,
     handleHoaInput,
+    handleFormSubmission,
   } = useStateContext()
 
   return (
     <div className="mg-page__left">
-      <form>
+      <form onSubmit={handleFormSubmission}>
         <div className="forms-two-col">
           <div className="form-group">
             <label className="form-group__label">Price(USD)</label>
