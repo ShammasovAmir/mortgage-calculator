@@ -7,9 +7,7 @@ const Display = () => {
       <img src={appBg} className="image-panel" />
       <div className="mg-results">
         <div className="mg-results__container">
-          <div className="mg-results__chart">
-            <Canvas />
-          </div>
+          <div className="mg-results__chart">{/* <Canvas /> */}</div>
           <div className="info">
             <h2 className="info__title">Mortgage Details</h2>
             <div className="info__details">
