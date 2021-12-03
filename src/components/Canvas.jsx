@@ -50,10 +50,10 @@ const Canvas = () => {
           },
         ],
       }}
-      width={400}
-      height={400}
+      height={'100%'}
       redraw={true}
       options={{
+        maintainAspectRatio: false,
         plugins: {
           animation: {
             duration: 0,

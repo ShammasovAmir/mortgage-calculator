@@ -41,6 +41,7 @@ html {
   overflow: hidden;
   display: flex;
 }
+/* Left Part */
 .mg-page__left {
   padding: 100px 20px 0 20px;
   width: 30%;
@@ -145,6 +146,7 @@ html {
   outline: none;
   cursor: pointer;
 }
+/* Right Part */
 .mg-page__right {
   width: 70%;
   background-color: blue;
@@ -190,7 +192,12 @@ html {
   opacity: 0;
 }
 .mg-results__chart {
+  position: relative;
+  display: flex;
+  justify-content: center;
   width: 400px;
+  height: 400px;
+  margin: 0 auto;
 }
 .mg-results__info {
   width: 100%;
@@ -235,4 +242,60 @@ html {
   font-weight: 100;
   font-size: 2rem;
   margin-bottom: 0;
+}
+
+@media screen and (max-width: 1199px) {
+  .mg-page {
+    min-height: 100vh;
+  }
+
+  .mg-page__left {
+    width: 40%;
+  }
+  .mg-page__right {
+    width: 60%;
+  }
+  .mg-results__container {
+    flex-direction: column;
+    max-width: 440px;
+  }
+  .mg-results__chart {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 899px) {
+  .mg-page__left {
+    width: 50%;
+  }
+  .mg-page__right {
+    width: 50%;
+  }
+  .mg-results__container {
+    max-width: 300px;
+  }
+  .mg-results__chart {
+    width: 260px;
+    height: 260px;
+  }
+}
+
+@media screen and (max-width: 659px) {
+  .top-header {
+    display: none;
+  }
+  .mg-page {
+    overflow-y: initial;
+    flex-direction: column;
+  }
+  .mg-page__left {
+    width: 100%;
+    padding: 20px;
+  }
+  .mg-page__right {
+    width: 100%;
+  }
+  .mg-results {
+    min-height: 720px;
+  }
 }
